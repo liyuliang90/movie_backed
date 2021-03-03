@@ -1,4 +1,0 @@
-2021-02-28 22:42:49,137 [DB.py:52] ERROR  db save Exception:(pymysql.err.DataError) (1406, "Data too long for column 'cast' at row 1")
-[SQL: INSERT INTO filminfo (`ID`, `like`, `publishDate`, publish_date, `showStatus`, pic, cast, `filmId`, film_id, grade, name) VALUES (%(ID)s, %(like)s, %(publishDate)s, %(publish_date)s, %(showStatus)s, %(pic)s, %(cast)s, %(filmId)s, %(film_id)s, %(grade)s, %(name)s)]
-[parameters: {'ID': 19, 'like': 619546, 'publishDate': '2020-12-24 00:00:00', 'publish_date': '2020-12-24 00:00:00', 'showStatus': 1, 'pic': 'https://gw.alicdn.com/i4/TB11SA1VWL7gK0jSZFBXXXZZpXa_.jpg_480x480Q30s150.jpg', 'cast': '刘德华 刘青云 倪妮 谢君豪 姜皓文 吴卓羲 马浴柯 黄德斌 郑子诚 洪天明 袁富华 刘浩龙 凌文龙 赵永洪 蔡瀚亿 张竣杰 张扬', 'filmId': '2310', 'film_id': 2310, 'grade': '7.6', 'name': '拆弹专家2'}]
-(Background on this error at: http://sqlalche.me/e/9h9h)

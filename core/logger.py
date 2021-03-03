@@ -10,7 +10,9 @@ _logger_handler = "logging.handlers.TimedRotatingFileHandler"
 _backupCount = 5
 
 def logfile(filename):
-    return os.path.join(os.getcwd(), 'logs', filename)
+    current_dir = os.path.abspath(os.path.dirname(__file__))
+    parent_dir = os.path.dirname(current_dir)
+    return os.path.join(parent_dir, 'logs', filename)
 
 LOGGING_CONFIG = {
     "version": 1,
