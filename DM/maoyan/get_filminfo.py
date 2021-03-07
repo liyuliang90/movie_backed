@@ -1,11 +1,21 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+__author__ = 'kevin'
+
+import os
+import sys
+current_dir = os.path.abspath(os.path.dirname(__file__))
+parent_dir = os.path.dirname(os.path.dirname(current_dir))
+sys.path.append(parent_dir)
+
 import json
 import requests
 from models.filminfo import FilmInfo
 from core.DB import db_save
 
 def get():
-    url = 'https://qt2.qingting123.com/CinemaAction.do'
     #url = 'https://qt2.qingting123.com/CinemaAction.do?dispatch=getFilmList&key=CinemaAction.getFilmList&appId=wxb2c309d723a7c7ac&cinemaOrigin=2&type=1&t=1614569137846&isJson=1'
+    url = 'https://qt2.qingting123.com/CinemaAction.do'
     form = {'dispatch':'getFilmList',
             'key':'CinemaAction.getFilmList',
             'appId':'wxb2c309d723a7c7ac',
@@ -22,7 +32,6 @@ def get():
     r_json = json.loads(r.text)
     movie_list = r_json['list']
     print(movie_list)
-    return
     for filminfo in movie_list:
         film = FilmInfo()
         film.ID = filminfo['id']

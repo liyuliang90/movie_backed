@@ -5,7 +5,7 @@ __author__ = 'kevin'
 import os
 import sys
 current_dir = os.path.abspath(os.path.dirname(__file__))
-parent_dir = os.path.dirname(current_dir)
+parent_dir = os.path.dirname(os.path.dirname(current_dir))
 sys.path.append(parent_dir)
 
 from core.DB import DBSession
@@ -18,6 +18,7 @@ def get_all_cinema():
     session.close()
     for i in city_set:
        print(i.ID)
+       get(i.ID)
    
 if __name__ == '__main__':
     get_all_cinema()

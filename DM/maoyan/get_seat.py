@@ -5,7 +5,7 @@ __author__ = 'kevin'
 import os
 import sys
 current_dir = os.path.abspath(os.path.dirname(__file__))
-parent_dir = os.path.dirname(current_dir)
+parent_dir = os.path.dirname(os.path.dirname(current_dir))
 sys.path.append(parent_dir)
 
 from core.DB import DBSession
@@ -60,8 +60,6 @@ def get(city_id=1, offset=0, limit=12):
     
     url_query = parse.urlencode(query, quote_via=parse.quote)
     url2 = url_base + url_query
-    if url == url2:
-        print('is true')
     headers = {
         "x-host": "http://maoyanapi.vip.sankuai.com",
         'token': 'MY_00hHSRENj7QSyZ5NSxQmXqj2lscAAAAw-auhnYEWLSL9DYp4VQv0S_zpthoMn9n223zyjNafNFOjLbgBgz8C1HwzWVGul1F_AAAAUAAAAAEB',
