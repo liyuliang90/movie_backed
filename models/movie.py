@@ -2,23 +2,23 @@
 # -*- coding: UTF-8 -*-
 __author__ = 'kevin'
 
-from sqlalchemy import Column, Integer, String, Float, DateTime, Text
+from sqlalchemy import Column, Integer, String, Float, DateTime, Text, Boolean
 from core.DB import Base
 
-class Test(Base):
-    __tablename__ = 'test'
+class Movie(Base):
+    __tablename__ = 'movie'
     ID = Column(Integer, primary_key=True, autoincrement=True)
-    like = Column(String(32), name='like', nullable=False)
-    director = Column(String(32), name='director', nullable=True)
-    publishDate = Column(DateTime, name='publishDate', nullable=False)
-    versionTypes = Column(String(32), name='versionType', nullable=False)
-    language = Column(String(32), name='language', nullable=False)
-    pic = Column(String(128), name='pic', nullable=False)
-    filmTypes = Column(String(64), name='filmTypes', nullable=False)
-    duration = Column(String(16), name='duration', nullable=False)
-    cast = Column(String(64), name='cast', nullable=False)
-    filmId = Column(String(16), name='filmId', nullable=False)
-    grade = Column(String(16), name='grade', nullable=False)
-    intro = Column(Text, name='intro', nullable=False)
-    name = Column(String(32), name='name', nullable=False)
+    Name = Column(String(32), name='name', nullable=False)
+    Star = Column(String(32), name='star', nullable=False)
+    Director = Column(String(64), name='director', nullable=False)
+    rt = Column(String(16), name='rt', nullable=False)
+    img = Column(String(128), name='img', nullable=False)
+    version = Column(String(64), name='version', nullable=True)
+    sc = Column(String(8), name='sc', nullable=True)
+    globalReleased = Column(Boolean, name='globalReleased', nullable=True)
+    wish = Column(String(16), name='wish', nullable=True)
+    showInfo = Column(String(32), name='showInfo', nullable=True)
+    showst = Column(Integer, name='showst', nullable=True)
+    wishst = Column(String(16), name='wishst', nullable=True)
+    showCinemaNum = Column(Integer, name='showCinemaNum', nullable=True)
 

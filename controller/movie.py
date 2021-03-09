@@ -4,29 +4,13 @@ __author__ = 'kevin'
 
 from core.logger import logger
 from core.base_controller import BaseHandler
+from core.DB import DBSession
+from models.movie import Movie
 
 class MovieHandler(BaseHandler):
     def get(self, *args, **kwargs):
-        logger.info('this is in IndexHandler')
+        logger.info('this is in MovieHandler')
         result = {
-            "movieIds":[
-                1299372,
-                1300936,
-                1217023,
-                1048268,
-                1225754,
-                1298938,
-                1299124,
-                1199007,
-                1309692,
-                657668,
-                1301774,
-                1218437,
-                1280137,
-                1332048,
-                553231,
-                25348
-            ],
             "movieList":[
                 {
                     "id":1299372,
@@ -222,4 +206,27 @@ class MovieHandler(BaseHandler):
                 }
             ]
         }
-        self.JsonResponse(result)
+        session = DBSession()
+        movie_set = session.query(Movie).order_by(Movie.showCinemaNum.desc()).order_by(Movie.sc.desc()).all()
+        session.close()
+        movie_list = []
+        for i in movie_set:
+            item = {
+                "id":i.ID,
+                "img":i.img,
+                "version":i.version,
+                "nm":i.Name,
+                "sc":i.sc,
+                "globalReleased":i.globalReleased,
+                "wish":i.wish,
+                "star":i.Star,
+                "rt":i.rt,
+                "showInfo":i.showInfo,
+                "showst":i.showst,
+                "wishst":i.wishst
+            }
+            movie_list.append(item)
+        data = {
+            "movieList": movie_list
+        }
+        self.JsonResponse(data)

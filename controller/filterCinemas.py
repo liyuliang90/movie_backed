@@ -1354,7 +1354,7 @@ result2 = {
 }
 class FilterCinemasHandler(BaseHandler):
     def get(self, *args, **kwargs):
-        city_id = self.get_argument('city_id')
+        city_id = self.get_argument('city_id',60)
         logger.info('this is in FilterCinemasHandler:%s' % city_id)
         session = DBSession()
         cb_set = session.query(CityBrand).filter(CityBrand.CityId==city_id).all()
