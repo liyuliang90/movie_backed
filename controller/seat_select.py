@@ -5,6 +5,8 @@ __author__ = 'kevin'
 from core.logger import logger
 from core.base_controller import BaseHandler
 
+base_url = 'http://192.168.75.128:8000'
+
 result = {
   "errorCode": 0,
   "errorMsg": "",
@@ -1269,7 +1271,8 @@ result = {
       "name": "可选",
       "type": "0",
       "seats": 1,
-      "icon": "https://i.postimg.cc/BbbWyY5D/image.png",
+      #"icon": "https://i.postimg.cc/BbbWyY5D/image.png",
+      "icon": "http://192.168.75.128:8000/static/kexuan/image.png",
       "isShow": "1",
       "position": "up"
     },
@@ -1277,7 +1280,8 @@ result = {
       "name": "已选",
       "type": "0-1",
       "seats": 1,
-      "icon": "https://i.postimg.cc/1X2dd93h/image.png",
+      #"icon": "https://i.postimg.cc/1X2dd93h/image.png",
+      "icon": "%s/static/yixuan/image.png" % base_url,
       "isShow": "1",
       "position": "up"
     },
@@ -1285,7 +1289,8 @@ result = {
       "name": "已售",
       "type": "0-2",
       "seats": 1,
-      "icon": "https://i.postimg.cc/LXywzkds/image.png",
+      #"icon": "https://i.postimg.cc/LXywzkds/image.png",
+      "icon": "%s/static/yishou/image.png" % base_url,
       "isShow": "1",
       "position": "up"
     },
@@ -1293,7 +1298,8 @@ result = {
       "name": "维修",
       "type": "0-3",
       "seats": 1,
-      "icon": "https://i.postimg.cc/BZVRbCcY/image.png",
+      #"icon": "https://i.postimg.cc/BZVRbCcY/image.png",
+      "icon": "%s/static/weixiu/image.png"%base_url,
       "isShow": "1",
       "position": "up"
     },
@@ -1301,7 +1307,8 @@ result = {
       "name": "情侣首座可选",
       "type": "1",
       "seats": 1,
-      "icon": "https://i.postimg.cc/bYVfbP8R/image.png",
+      #"icon": "https://i.postimg.cc/bYVfbP8R/image.png",
+      "icon": "%s/static/qinglv_kexuan/image.png" % base_url,
       "isShow": "0",
       "position": "up"
     },
@@ -1309,7 +1316,8 @@ result = {
       "name": "情侣首座已选",
       "type": "1-1",
       "seats": 1,
-      "icon": "https://i.postimg.cc/nrC5TsZG/image.png",
+      #"icon": "https://i.postimg.cc/nrC5TsZG/image.png",
+      "icon": "%s/static/qinglv_yixuan/image.png" % base_url,
       "isShow": "0",
       "position": "up"
     },
@@ -1317,7 +1325,8 @@ result = {
       "name": "情侣首座已售",
       "type": "1-2",
       "seats": 1,
-      "icon": "https://i.postimg.cc/8CS2DPBT/image.png",
+      #"icon": "https://i.postimg.cc/8CS2DPBT/image.png",
+      "icon": "%s/static/qinglv_yishou/image.png" % base_url,
       "isShow": "0",
       "position": "up"
     },
@@ -1325,7 +1334,8 @@ result = {
       "name": "情侣首座维修",
       "type": "1-3",
       "seats": 1,
-      "icon": "https://i.postimg.cc/QMJRMG01/image.png",
+      #"icon": "https://i.postimg.cc/QMJRMG01/image.png",
+      "icon": "%s/static/qinglv_weixiu/image.png" % base_url,
       "isShow": "0",
       "position": "up"
     },
@@ -1333,7 +1343,8 @@ result = {
       "name": "情侣次座可选",
       "type": "2",
       "seats": 1,
-      "icon": "https://i.postimg.cc/sxLFRYKL/image.png",
+      #"icon": "https://i.postimg.cc/sxLFRYKL/image.png",
+      "icon": "%s/static/qinglvcizuo_kexuan/image.png" % base_url,
       "isShow": "0",
       "position": "up"
     },
@@ -1341,7 +1352,8 @@ result = {
       "name": "情侣次座已选",
       "type": "2-1",
       "seats": 1,
-      "icon": "https://i.postimg.cc/nc68R1Xj/image.png",
+      #"icon": "https://i.postimg.cc/nc68R1Xj/image.png",
+      "icon": "%s/static/qinglvcizuo_yixuan/image.png" % base_url,
       "isShow": "0",
       "position": "up"
     },
@@ -1349,7 +1361,8 @@ result = {
       "name": "情侣次座已售",
       "type": "2-2",
       "seats": 1,
-      "icon": "https://i.postimg.cc/P5ZgB8D6/image.png",
+      #"icon": "https://i.postimg.cc/P5ZgB8D6/image.png",
+      "icon": "%s/static/qinglvcizuo_yishou/image.png" % base_url,
       "isShow": "0",
       "position": "up"
     },
@@ -1357,7 +1370,8 @@ result = {
       "name": "情侣次座维修",
       "type": "2-3",
       "seats": 1,
-      "icon": "https://i.postimg.cc/3Jy5FqxQ/image.png",
+      #"icon": "https://i.postimg.cc/3Jy5FqxQ/image.png",
+      "icon": "%s/static/qinglvcizuo_weixiu/image.png" % base_url,
       "isShow": "0",
       "position": "up"
     },
@@ -1365,7 +1379,8 @@ result = {
       "name": "情侣座",
       "type": "5",
       "seats": 2,
-      "icon": "https://i.postimg.cc/85kxJK03/image.png",
+      #"icon": "https://i.postimg.cc/85kxJK03/image.png",
+      "icon": "%s/static/qinglvzuo/image.png" % base_url,
       "isShow": "1",
       "position": "up"
     }

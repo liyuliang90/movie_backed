@@ -5763,6 +5763,7 @@ def test():
         c.ID = i['id']
         c.name = i['nm']
         c.py = i['py']
+        c.PyPre = i['py'][0].upper()
         db_save(c)
 
 if __name__ == '__main__':

@@ -8,7 +8,7 @@ from router.router import Router
 
 if __name__ == '__main__':
     settings = dict(
-        static_path = os.path.join(os.path.dirname(__file__), "statics"),           #配置应用程序前端所需静态文件目录
+        static_path = os.path.join(os.path.dirname(__file__), "static"),           #配置应用程序前端所需静态文件目录
         template_path = os.path.join(os.path.dirname(__file__), "templates"),       #配置html文件路径
         login_url='/login',                                                         #配置登录url
         xsrf_cookies=False,                                                          #,防止跨站请求攻击，在post请求中起效,

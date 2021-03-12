@@ -15,6 +15,7 @@ from controller.mostExpected import MostExpectedHandler
 from controller.comingList import ComingListHandler
 from controller.ajax_movie import AjaxMovieHandler
 from controller.cityLocation import CityLocationHandler
+from controller.citys import CitysHandler
 
 Router = [
     url(r"/ajax/movieOnInfoList", MovieHandler),
@@ -29,4 +30,5 @@ Router = [
     url(r"/mmdb/comments/movie", MovieCommentHandler),
     
     url(r"/ajax/cityLocation", CityLocationHandler),
+    url(r"/ajax/citys", CitysHandler),
 ]

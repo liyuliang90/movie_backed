@@ -4,6 +4,9 @@ __author__ = 'kevin'
 
 from core.logger import logger
 from core.base_controller import BaseHandler
+from core.DB import DBSession
+from models.cinema import Cinema
+from geopy.distance import geodesic
 
 cinemas = {
         "cinemas":[
@@ -871,4 +874,65 @@ cinemas = {
 class CinemaHandler(BaseHandler):
     def get(self, *args, **kwargs):
         logger.info('this is in CinemaHandler')
-        self.JsonResponse(cinemas)
+        city_id = self.get_argument('city_id',0)
+        if not city_id:
+            print('in not city')
+            result = {
+                'cinemas':[],
+                "paging":{
+                    "hasMore":False,
+                    "limit":12,
+                    "offset":0,
+                    "total":92
+                }
+            }
+            self.JsonResponse(result)
+            return
+        district_id = self.get_argument('districtId',0)
+        lat = self.get_argument('lat',0)
+        lng = self.get_argument('lng',0)
+        if lat and lng:
+            distance_flag = True
+        session = DBSession()
+        cinema_query = session.query(Cinema).filter(Cinema.cityId==city_id)
+        if int(district_id) > 0:
+            cinema_query = cinema_query.filter(Cinema.districtId==district_id)
+        if int(district_id) == -1:
+            lat_min = float(lat) - 0.1
+            lat_max = float(lat) + 0.1
+            lng_min = float(lng) - 0.1
+            lng_max = float(lng) + 0.1
+            cinema_query = cinema_query.filter(
+                        Cinema.lat>lat_min,Cinema.lat<lat_max).filter(
+                        Cinema.lng>lng_min,Cinema.lng<lng_max)
+        cinema_set = cinema_query.all()
+        session.close()
+        cinema_list = []
+        for i in cinema_set:
+            if distance_flag:
+                distance = geodesic((lat,lng),(i.lat,i.lng))
+            item = {}
+            item['id'] = i.ID
+            item['nm'] = i.name
+            item['sellPrice'] = '22'
+            item['addr'] = i.addr
+            if distance_flag:
+                item['distance'] = '%0.1fkm' % distance.km
+            item['endorse'] = i.endorse
+            item['allowRefund'] = i.allowRefund
+            item['hallType'] = ''
+            item['snack'] = i.snack
+            item['vipDesc'] = i.vipDesc
+            item['promotion'] = {'cardPromotionTag':i.cardPromotionTag}
+            item['showTimes'] = i.showTimes
+            cinema_list.append(item)
+        result = {
+            'cinemas':cinema_list,
+            "paging":{
+                "hasMore":True,
+                "limit":12,
+                "offset":0,
+                "total":92
+            }
+        }
+        self.JsonResponse(result)

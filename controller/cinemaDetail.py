@@ -4,12 +4,55 @@ __author__ = 'kevin'
 
 from core.logger import logger
 from core.base_controller import BaseHandler
+from core.DB import DBSession
+from models.cinema import Cinema
+from models.plan import PlanMovie, PlanMovieDate, Plan
+
+cinemas_format1={
+    'showData':{
+        'movies':[
+            {
+                "nm":"你好，李焕英",
+                "globalReleased":True,
+                 "wish":1162302,
+                 "sc":"9.5",
+                 "desc":"128分钟 | 喜剧 | 贾玲,张小斐,沈腾",
+                 "dur":128,
+                 "img":"http://p0.meituan.net/w.h/movie/8a1ad4ec0d81f240e4d8c2d1b10c2ec53475644.jpg",
+                
+                 "shows":[
+                    {
+                        "plist":[{
+                            "dt":"2021-03-03",
+                            "tm":"17:00",
+                            "lang":"国语",
+                            "tp":"2D",
+                            "th":"5号杜比全景声志正口腔厅",
+                            "vipPrice":"38",
+                            "vipPriceName":"折扣卡",
+                            "vipPriceNameNew":"折扣卡",
+                            "extraDesc":"",
+                        }],
+                        "showDate":"2021-03-03"
+                     },
+                 ]
+            },
+        ],
+    },
+    'cinemaData':{
+            'nm':"东影时代影城（水悦城店）",
+            'addr':"123456",
+            'lat':120.212,
+            'lng':36.121,
+        }
+    
+}
 
 cinemas_format = {
         'showData':{
             'movies':[
                          {
-                "chiefBonus":None,
+                #"chiefBonus":None,
                 "desc":"128分钟 | 喜剧 | 贾玲,张小斐,沈腾",
                 "dur":128,
                 "globalReleased":True,
@@ -2900,5 +2943,81 @@ cinemas = {
 class CinemaDetailHandler(BaseHandler):
     def get(self, *args, **kwargs):
         logger.info('this is in CinemaHandler')
-        self.JsonResponse(cinemas_format)
+        cinema_id = self.get_argument('cinema_id',0)
+        if not city_id:
+            result = {
+                'cinemas':[],
+                "paging":{
+                    "hasMore":False,
+                    "limit":12,
+                    "offset":0,
+                    "total":92
+                }
+            }
+            self.JsonResponse(result)
+            return
+        result = {}
+        movie_dict = {}
+        session = DBSession()
+        ciname = session.query(Cinema).filter(Cinema.ID).first()
+        if ciname:
+            result['cinemaData'] = {'nm':ciname.name,
+                                    'addr':cinema.addr,
+                                    'lat':cinema.lat,
+                                    'lng':cinema.lng}
+            pm_set = session.query(PlanMovie.CinemaId=ciname.ID).all()
+            for i in pm_set:
+                movie = session.query(Movie).filter(Movie.ID=i.MovieId).get()
+                movie_item = {
+                    "nm": movie.Name,
+                    "globalReleased":movie.globalReleased,
+                    "wish":movie.wish,
+                    "sc":movie.sc,
+                    "desc":"128分钟 | 喜剧 | 贾玲,张小斐,沈腾",
+                    "dur":128,
+                    "img":movie.img,
+                }
+                date_set = session.query(PlanMovieDate.PlanMovieId=i.ID).all()
+                show_list = []
+                for j in date_set:
+                    shows_list = {'showDate': j.get('ShowDate')}
+                    plan_set = session.query(Plan).filter(Plan.pmdId=j.ID).all()
+                    plist = []
+                    for k in plan_set:
+                        plan = {
+                            "dt":k.dt,
+                            "tm":k.tm,
+                            "lang":k.lang,
+                            "tp":k.tp,
+                            "th":k.th,
+                            "vipPrice":k.vipPrice,
+                            "vipPriceName":"折扣卡,
+                            "vipPriceNameNew":"折扣卡",
+                            "extraDesc":"",
+                        }
+                    
+                    
+                if i.MovieId in movie_dict:
+                    if 
+                else:
+                    movie_dict[i.MovieId] = {
+                        "shows":[
+                            {
+                                "plist":[{
+                                    "dt":i.dt,
+                                    "tm":i.tm,
+                                    "lang":i.lang,
+                                    "tp":i.tp,
+                                    "th":i.th,
+                                    "vipPrice":i.vipPrice,
+                                    "vipPriceName":i.vipPriceName,
+                                    "vipPriceNameNew":i.vipPriceNameNew,
+                                    "extraDesc":i.extraDesc,
+                                }]
+                               "showDate":i.ShowDate 
+                            }
+                        ]
+                    }
+                    pass
+        self.JsonResponse(cinemas_format1)
         #self.JsonResponse(cinemas)

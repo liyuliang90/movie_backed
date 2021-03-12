@@ -45,28 +45,30 @@ def get(city_id=60):
             cb.Name = i.get('name')
             cb.Count = i.get('count')
             db_save(cb)
-    district_set = r_json.get('district').get('subItems')
-    if district_set:
-        for i in district_set:
-            if i.get('id') < 0:
-                continue
-            subitems = i.get('subItems')
-            district_id = i.get('id')
-            for j in subitems:
-                if j.get('id') < 0:
+    district = r_json.get('district')
+    if district:
+        district_set = district.get('subItems')
+        if district_set:
+            for i in district_set:
+                if i.get('id') < 0:
                     continue
-                cds = CityDistrictSub()
-                cds.ID = j.get('id')
-                cds.DistrictId = district_id
-                cds.Name = j.get('name')
-                cds.Count = j.get('count')
-                db_save(cds)
-            cd = CityDistrict()
-            cd.ID = district_id
-            cd.CityId = city_id
-            cd.Name = i.get('name')
-            cd.Count = i.get('count')
-            db_save(cd)
+                subitems = i.get('subItems')
+                district_id = i.get('id')
+                for j in subitems:
+                    if j.get('id') < 0:
+                        continue
+                    cds = CityDistrictSub()
+                    cds.ID = j.get('id')
+                    cds.DistrictId = district_id
+                    cds.Name = j.get('name')
+                    cds.Count = j.get('count')
+                    db_save(cds)
+                cd = CityDistrict()
+                cd.ID = district_id
+                cd.CityId = city_id
+                cd.Name = i.get('name')
+                cd.Count = i.get('count')
+                db_save(cd)
             
     subway = r_json.get('subway')
     if subway:

@@ -10,4 +10,5 @@ class Citys(Base):
     ID = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(32), name='nm', nullable=False)
     py = Column(String(32), name='py', nullable=False)
+    PyPre = Column(String(4), name='py_pre', nullable=False)
 
