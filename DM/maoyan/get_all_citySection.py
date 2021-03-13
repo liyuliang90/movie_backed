@@ -14,7 +14,7 @@ from models.citys import Citys
 
 def get_all_citySection():
     session = DBSession()
-    city_set = session.query(Citys).filter(Citys.ID>486).all()
+    city_set = session.query(Citys).filter(Citys.ID<=486).all()
     session.close()
     for i in city_set:
        print(i.ID)

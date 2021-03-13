@@ -21,4 +21,6 @@ class Movie(Base):
     showst = Column(Integer, name='showst', nullable=True)
     wishst = Column(String(16), name='wishst', nullable=True)
     showCinemaNum = Column(Integer, name='showCinemaNum', nullable=True)
+    dur = Column(String(8), name='dur', nullable=False)
+    desc = Column(String(64), name='desc', nullable=True)
 

@@ -17,9 +17,15 @@ class AlchemyEncoder(json.JSONEncoder):
             fields = {}
             for field in [x for x in dir(obj) if not x.startswith('_') and x != 'metadata']:
                 data = obj.__getattribute__(field)
+                print(type(data))
                 try:
+                    print(type(data))
                     if type(data) is datetime.datetime:
                         data = data.strftime("%Y-%m-%d %H:%M:%S")
+                    elif type(data) is datetime.date:
+                        data = data.strftime("%Y-%m-%d")
+                    elif type(data) is datetime.time:
+                        data = data.strftime("%H:%M:%S")
                     else:
                         json.dumps(data)
                     fields[field] = data
@@ -28,6 +34,17 @@ class AlchemyEncoder(json.JSONEncoder):
             return fields
 
         return json.JSONEncoder.default(self, obj)
+
+class DateEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime.datetime):
+            return obj.strftime('%Y-%m-%d %H:%M:%S')
+        elif isinstance(obj, datetime.date):
+            return obj.strftime("%Y-%m-%d")
+        elif isinstance(obj, datetime.time):
+            return obj.strftime("%H:%M:%S")
+        else:
+            return json.JSONEncoder.default(self, obj)
 
 class BaseHandler(RequestHandler):
     
@@ -59,4 +76,4 @@ class BaseHandler(RequestHandler):
                 
     def JsonResponse(self, result):
         self.set_header("Content-Type","application/json;charset=utf-8")
-        self.write(json.dumps(result,ensure_ascii=False,cls=AlchemyEncoder))
+        self.write(json.dumps(result,ensure_ascii=False,cls=DateEncoder))

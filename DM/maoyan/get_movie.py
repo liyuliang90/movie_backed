@@ -33,7 +33,6 @@ def get():
         return
     r_json = json.loads(r.text)
     movie_list = r_json['data']['hot']
-    print(movie_list)
     for i in movie_list:
         item = Movie()
         item.ID = i.get('id')
@@ -50,6 +49,8 @@ def get():
         item.showst = i.get('showst')
         item.wishst = i.get('wishst')
         item.showCinemaNum = i.get('showCinemaNum')
+        item.dur = i.get('dur')
+        item.desc = i.get('desc')
         db_save(item)
 
 if __name__ == '__main__':
