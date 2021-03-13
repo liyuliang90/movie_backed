@@ -16,6 +16,7 @@ from controller.comingList import ComingListHandler
 from controller.ajax_movie import AjaxMovieHandler
 from controller.cityLocation import CityLocationHandler
 from controller.citys import CitysHandler
+from controller.actor import ActorHandler
 
 Router = [
     url(r"/ajax/movieOnInfoList", MovieHandler),
@@ -31,4 +32,6 @@ Router = [
     
     url(r"/ajax/cityLocation", CityLocationHandler),
     url(r"/ajax/citys", CitysHandler),
+    url(r"/ajax/actor", ActorHandler),
+    
 ]

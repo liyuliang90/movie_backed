@@ -5,7 +5,7 @@ __author__ = 'kevin'
 from core.logger import logger
 from core.base_controller import BaseHandler
 
-base_url = 'http://192.168.75.128:8000'
+base_url = 'http://192.168.243.133:8000'
 
 result = {
   "errorCode": 0,
@@ -1272,7 +1272,7 @@ result = {
       "type": "0",
       "seats": 1,
       #"icon": "https://i.postimg.cc/BbbWyY5D/image.png",
-      "icon": "http://192.168.75.128:8000/static/kexuan/image.png",
+      "icon": "%s/static/kexuan/image.png"%base_url,
       "isShow": "1",
       "position": "up"
     },
