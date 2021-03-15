@@ -11,7 +11,7 @@ from .config import CONFIG
 
 # 创建对象的基类:
 Base = declarative_base()
-PrintSql = False #是否打印sql语句
+PrintSql = True #是否打印sql语句
 
 def MysqlConnect(conf):
     #mysql_connect_base = "mysql+mysqlconnector://{user}:{password}@{host}:{port}/{db}?charset={charset}"
@@ -48,6 +48,10 @@ def db_save(item):
         session.add(item)
         session.commit()
     except Exception as e:
+        print(dir(e))
+        print(e.args)
+        #SQL = e.SQL%q.parameters
+        #logger.error(" db save sql:%s" % sql)
         session.rollback()
         logger.error(" db save Exception:%s" % e)
     finally:

@@ -44,6 +44,7 @@ def get():
         item.version = i.get('ver')
         item.sc = i.get('sc')
         item.globalReleased = i.get('globalReleased')
+        item.snum = i.get('snum')
         item.wish = i.get('wish')
         item.showInfo = i.get('showInfo')
         item.showst = i.get('showst')

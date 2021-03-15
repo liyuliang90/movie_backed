@@ -9,7 +9,7 @@ from models.star import Actor
 
 class ActorHandler(BaseHandler):
     def get(self, *args, **kwargs):
-        logger.info('this is in CitysHandler')
+        logger.info('this is in ActorHandler')
         movie_id = self.get_argument('movie_id',0)
         if not movie_id:
             data = {'success':False}

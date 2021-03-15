@@ -2,8 +2,9 @@
 # -*- coding: UTF-8 -*-
 __author__ = 'kevin'
 
-from sqlalchemy import Column, Integer, String, Float, DateTime, Text
+from sqlalchemy import Column, Integer, String, Float, DateTime, Text, DECIMAL
 from core.DB import Base
+from geoalchemy2 import Geometry
 
 class Cinema(Base):
     __tablename__ = 'cinema'
@@ -25,4 +26,28 @@ class Cinema(Base):
     showTimes = Column(String(8), name='showTimes', nullable=True)
     
     cardPromotionTag = Column(String(64), name='cardPromotionTag', nullable=True)
+    
+    
+    
+    
+from sqlalchemy import func
+from sqlalchemy.types import UserDefinedType
+
+class Geometory(UserDefinedType):
+    def get_col_spec(self):
+        return "GEOMETRY"
+
+    def bind_expression(self, bindvalue):
+        return func.GeomFromText(bindvalue, type_=self)
+
+    def column_expression(self, col):
+        return func.ASTEXT(col, type_=self)
+    
+from sqlalchemy import Column, Integer, Computed
+
+class CinemaGeo(Base):
+    __tablename__ = 'cinema2'
+    ID = Column(Integer, primary_key=True, autoincrement=True)
+    geom = Column(Geometory, comment='经纬度', nullable=True)
+    geoHash = Column(String(50), Computed("st_geohash(`geom`,8)"), index=True)
 

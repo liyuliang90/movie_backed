@@ -4,6 +4,9 @@ __author__ = 'kevin'
 
 from core.logger import logger
 from core.base_controller import BaseHandler
+from core.DB import DBSession
+from models.movie import Movie
+from models.photo import Photo
 
 movie_detail = {
     'id':'',
@@ -36,8 +39,8 @@ movie_detail3 = {
     'enm':"Hi, Mom",
     'globalReleased':True,
     'sc':9.5,
-    'stars':["贾玲","张小斐","沈腾"],
-    'index':'',
+    #'stars':["贾玲","张小斐","沈腾"],
+    #'index':'',
     'snum':2041921,
     'wish':1162302,
     'cat':"喜剧,剧情",
@@ -184,4 +187,38 @@ movie_detail2 = {
 class MovieDetailHandler(BaseHandler):
     def get(self, *args, **kwargs):
         logger.info('this is in CinemaHandler')
-        self.JsonResponse(movie_detail3)
+        movie_id = self.get_argument('movieId',0)
+        if not movie_id:
+            data = {
+                'detailMovie':{}
+            }
+            self.JsonResponse(data)
+            return
+        session = DBSession()
+        movie = session.query(Movie).get(movie_id)
+        photos = session.query(Photo).filter(Photo.MovieId==movie_id).all()
+        session.close()
+        photo_list = [i.img for i in photos]
+        data = {
+            'detailMovie':{
+                'id':movie.ID,
+                'img':movie.img,
+                'nm':movie.Name,
+                'enm':movie.enm,
+                'globalReleased':movie.globalReleased,
+                'sc':movie.sc,
+                'snum':movie.snum,
+                'wish':movie.wish,
+                'cat':movie.cat,
+                'version':movie.version,
+                'src':movie.src,
+                'dur':movie.dur,
+                'pubDesc':movie.pubDesc,
+                'dra':movie.dra,
+                'videoImg':movie.videoImg,
+                'photos':photo_list,
+                'rt':movie.rt,
+                'onSale':True,
+            }
+        }
+        self.JsonResponse(data)

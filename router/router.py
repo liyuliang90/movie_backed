@@ -4,7 +4,6 @@ __author__ = 'kevin'
 
 from tornado.web import url
 from controller.movie import MovieHandler
-from controller.index import IndexHandler
 from controller.cinemas import CinemaHandler 
 from controller.cinemaDetail import CinemaDetailHandler
 from controller.seat_select import SeatSelectHandler

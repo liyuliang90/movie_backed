@@ -10,5 +10,7 @@ from models.movie import Movie
 from models.city_section import CityBrand, CityDistrict, CityDistrictSub, CitySubway, CitySubwayStation
 from models.plan import PlanMovie, PlanMovieDate, Plan
 from models.star import Actor
+from models.photo import Photo
+from models.cinema import CinemaGeo
 if __name__ == '__main__':
     create_table()

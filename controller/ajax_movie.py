@@ -8,7 +8,20 @@ from core.DB import DBSession
 from models.movie import Movie
 
 result_format = {
-    
+    'id':'',
+    'nm':'',
+    'sellPrice':'',
+    'addr':'',
+    'distance':'',
+    'endorse':'',
+    'allowRefund':'',
+    'hallType':'',
+    'snack':'',
+    'vipDesc':'',
+    "promotion":{
+                    "cardPromotionTag":"开卡特惠，25元起开卡",
+    },
+    'showTimes':
 }
 
 result = {
