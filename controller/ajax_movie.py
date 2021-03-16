@@ -21,7 +21,7 @@ result_format = {
     "promotion":{
                     "cardPromotionTag":"开卡特惠，25元起开卡",
     },
-    'showTimes':
+    'showTimes':'',
 }
 
 result = {

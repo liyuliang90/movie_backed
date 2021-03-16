@@ -6,7 +6,7 @@ from core.logger import logger
 from core.base_controller import BaseHandler
 from core.DB import DBSession
 from models.cinema import Cinema
-from geopy.distance import geodesic
+from service.get_cinema import get_cinema_gis
 
 cinemas = {
         "cinemas":[
@@ -874,65 +874,58 @@ cinemas = {
 class CinemaHandler(BaseHandler):
     def get(self, *args, **kwargs):
         logger.info('this is in CinemaHandler')
-        city_id = self.get_argument('city_id',0)
+        city_id = self.get_int('city_id')
+        limit = self.get_int('limit',12)
+        offset = self.get_int('offset')
+        district_id = self.get_int('districtId')
+        lat = self.get_float('lat')
+        lng = self.get_float('lng')
         if not city_id:
-            print('in not city')
+            logger.info('city_id is null:%s' % city_id)
             result = {
                 'cinemas':[],
                 "paging":{
                     "hasMore":False,
                     "limit":12,
                     "offset":0,
-                    "total":92
+                    "total":0
                 }
             }
             self.JsonResponse(result)
             return
-        district_id = self.get_argument('districtId',0)
-        lat = self.get_argument('lat',0)
-        lng = self.get_argument('lng',0)
         if lat and lng:
             distance_flag = True
-        session = DBSession()
-        cinema_query = session.query(Cinema).filter(Cinema.cityId==city_id)
-        if int(district_id) > 0:
-            cinema_query = cinema_query.filter(Cinema.districtId==district_id)
-        if int(district_id) == -1:
-            lat_min = float(lat) - 0.1
-            lat_max = float(lat) + 0.1
-            lng_min = float(lng) - 0.1
-            lng_max = float(lng) + 0.1
-            cinema_query = cinema_query.filter(
-                        Cinema.lat>lat_min,Cinema.lat<lat_max).filter(
-                        Cinema.lng>lng_min,Cinema.lng<lng_max)
-        cinema_set = cinema_query.all()
-        session.close()
+        distance = 100000
+        query_set, total = get_cinema_gis(city_id, district_id , lng, lat, distance, limit, offset)
         cinema_list = []
-        for i in cinema_set:
-            if distance_flag:
-                distance = geodesic((lat,lng),(i.lat,i.lng))
-            item = {}
-            item['id'] = i.ID
-            item['nm'] = i.name
-            item['sellPrice'] = '22'
-            item['addr'] = i.addr
-            if distance_flag:
-                item['distance'] = '%0.1fkm' % distance.km
-            item['endorse'] = i.endorse
-            item['allowRefund'] = i.allowRefund
-            item['hallType'] = ''
-            item['snack'] = i.snack
-            item['vipDesc'] = i.vipDesc
-            item['promotion'] = {'cardPromotionTag':i.cardPromotionTag}
-            item['showTimes'] = i.showTimes
-            cinema_list.append(item)
+        if query_set:
+            for i in query_set:
+                item = {}
+                item['id'] = i.ID
+                item['nm'] = i.name
+                item['sellPrice'] = '22'
+                item['addr'] = i.addr
+                if distance_flag:
+                    item['distance'] = '%0.1fkm' % (i.distance/1000.0)
+                item['endorse'] = i.endorse
+                item['allowRefund'] = i.allowRefund
+                item['hallType'] = ''
+                item['snack'] = i.snack
+                item['vipDesc'] = i.vipDesc
+                item['promotion'] = {'cardPromotionTag':i.cardPromotionTag}
+                item['showTimes'] = i.showTimes
+                cinema_list.append(item)
+        hasMore = True
+        if offset + limit >= total:
+            hasMore = False
         result = {
             'cinemas':cinema_list,
             "paging":{
-                "hasMore":True,
-                "limit":12,
-                "offset":0,
-                "total":92
+                "hasMore":hasMore,
+                "limit":limit,
+                "offset":offset+len(query_set),
+                "total":total
             }
         }
         self.JsonResponse(result)
+        return

@@ -65,6 +65,7 @@ def get(city_id=1, offset=0, limit=12):
         c.vipDesc = i['tag']['vipTag']
         c.showTimes = i['showTimes']
         c.cardPromotionTag = i['promotion']['cardPromotionTag']
+        c.gis = 'POINT(%s %s)' % (i['lng'],i['lat'])
         db_save(c)
     return
    

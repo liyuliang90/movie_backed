@@ -73,6 +73,15 @@ class BaseHandler(RequestHandler):
         if status_code != 200:
             self.set_status(status_code)
             self.write({"msg": str(exc_instance)})
+            
+    def get_str(self, key, default=''):
+        return self.get_argument(key,default,strip=True)
+        
+    def get_int(self, key, default=0):
+        return int(self.get_argument(key, default, strip=True))
+    
+    def get_float(self, key, default=0):
+        return float(self.get_argument(key, default, strip=True))
                 
     def JsonResponse(self, result):
         self.set_header("Content-Type","application/json;charset=utf-8")

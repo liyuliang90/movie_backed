@@ -18,6 +18,7 @@ def get_all_cinema():
     city_set = session.query(Citys).all()
     session.close()
     for i in city_set:
+        print(i.ID)
         session = DBSession()
         dis_set = session.query(CityDistrict).filter(CityDistrict.CityId==i.ID).all()
         session.close()
